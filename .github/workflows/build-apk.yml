@@ -3,7 +3,8 @@ name: Build Android APK
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -24,10 +25,10 @@ jobs:
         run: flutter --version
 
       - name: Create Android project
-  run: flutter create --platforms=android --project-name warehouse_inventory .
+        run: flutter create --platforms=android --project-name warehouse_inventory .
 
-- name: Remove default tests
-  run: rm -rf test
+      - name: Remove default tests
+        run: rm -rf test
 
       - name: Get dependencies
         run: flutter pub get
@@ -36,7 +37,7 @@ jobs:
         run: flutter analyze
 
       - name: Build APK
-        run: flutter build apk --release --verbose
+        run: flutter build apk --release
 
       - name: Upload APK
         if: success()
